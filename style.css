@@ -15,20 +15,7 @@ html {
 
 body {
   height: 100vh;
-  background: #c6ffdd; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #f7797d,
-    #fbd786,
-    #c6ffdd
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #f7797d,
-    #fbd786,
-    #c6ffdd
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background: linear-gradient(to right, #f7797d, #fbd786, #c6ffdd);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,9 +32,9 @@ h1 {
     rgba(10, 35, 104, 1) 99.4%
   );
   text-transform: uppercase;
+  background-clip: unset;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
@@ -86,8 +73,18 @@ h2 {
   cursor: pointer;
 }
 
-.score {
-  font-size: 2rem;
-  color: rgb()
+.buttons button:disabled {
+  border-color: black;
 }
 
+.correct {
+  box-shadow: 0 0 10px 15px green;
+}
+
+.wrong {
+  box-shadow: 0 0 10px 15px red;
+}
+
+.score {
+  font-size: 2rem;
+}

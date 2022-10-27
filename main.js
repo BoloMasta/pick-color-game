@@ -6,6 +6,8 @@ const gvalue = document.querySelector("#gvalue");
 const bvalue = document.querySelector("#bvalue");
 
 let correctColorGlobal = "";
+let correctButtonIdGlobal = 0;
+let score = 0;
 
 const generateNumber = () => Math.floor(Math.random() * 256);
 
@@ -21,29 +23,20 @@ function generateColorRgb() {
   );
 }
 
-function ConsoleThis() {
-  console.log(this.style.backgroundColor);
-  if (this.style.backgroundColor === correctColorGlobal) {
-    console.log("WIN");
-  }
-}
+function generateButtons() {
+  buttons.forEach((button) => {
+    button.disabled = false;
+    button.classList.remove("correct", "wrong");
+    button.style.backgroundColor = generateColorRgb();
+    button.addEventListener("click", resultFunction);
+  });
 
-function calcutaleDaysBetweenDates(begin, end) {
-
-}
-
-
-buttons.forEach((button) => {
-  button.style.backgroundColor = generateColorRgb();
-  button.addEventListener("click", ConsoleThis);
-});
-
-function generateCorrectColor() {
-  const numberOfAnswer = Math.floor(Math.random() * 5) + 1;
-  const buttonId = `#btn${numberOfAnswer}`;
-  const correctColor = document.querySelector(buttonId).style.backgroundColor;
+  const correctButtonId = `#btn${Math.floor(Math.random() * 5) + 1}`;
+  const correctColor =
+    document.querySelector(correctButtonId).style.backgroundColor;
 
   correctColorGlobal = correctColor;
+  correctButtonIdGlobal = correctButtonId;
 
   rvalue.innerHTML = correctColor.slice(4, correctColor.indexOf(","));
   gvalue.innerHTML = correctColor.slice(
@@ -59,4 +52,26 @@ function generateCorrectColor() {
   );
 }
 
-generateCorrectColor();
+generateButtons();
+
+function resultFunction() {
+  if (this.style.backgroundColor === correctColorGlobal) {
+    this.classList.add("correct");
+    score++;
+    scoreNumber.innerHTML = score;
+    afterClick();
+  } else {
+    document.querySelector(correctButtonIdGlobal).classList.add("correct");
+    this.classList.add("wrong");
+    afterClick();
+  }
+}
+
+function afterClick() {
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
+  setTimeout(() => {
+    generateButtons();
+  }, 3000);
+}
